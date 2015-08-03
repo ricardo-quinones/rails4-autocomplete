@@ -14,7 +14,7 @@ module Rails4Autocomplete
         method  = parameters[:method]
         options = parameters[:options]
         scopes  = Array(options[:scopes])
-        where   = options[:where]
+        where   = options[:where].is_a?(Proc) ? options[:where][options[:params]] : options[:where]
         limit   = get_autocomplete_limit(options)
         order   = get_autocomplete_order(method, options, model)
 

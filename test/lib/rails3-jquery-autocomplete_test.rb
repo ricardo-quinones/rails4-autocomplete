@@ -12,6 +12,7 @@ module Rails4Autocomplete
         @controller = ActorsController.new
         @items = {}
         @options = { :display_value => :name }
+        @default_params = {"controller"=>"rails4_autocomplete/rails4_autocomplete_test/actors", "action"=>"autocomplete_movie_name"}.with_indifferent_access
       end
 
       should 'respond to the action' do
@@ -19,8 +20,9 @@ module Rails4Autocomplete
       end
 
       should 'render the JSON items' do
+        passed_in_options = @options.merge(params: @default_params.merge(term: 'query'))
         mock(@controller).get_autocomplete_items({
-          :model => Movie, :method => :name, :options => @options, :term => "query"
+          :model => Movie, :method => :name, :options => passed_in_options, :term => "query"
         }) { @items }
 
         mock(@controller).json_for_autocomplete(@items, :name, nil)

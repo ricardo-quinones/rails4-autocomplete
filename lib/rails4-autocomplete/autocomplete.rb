@@ -47,6 +47,7 @@ module Rails4Autocomplete
           method = options[:column_name] if options.has_key?(:column_name)
 
           term = params[:term]
+          options.merge!(params: params) # pass the params to do more dynamic stuff
 
           if term && !term.blank?
             #allow specifying fully qualified class name for model object
